@@ -6,7 +6,7 @@ Conway's life game.
 ----------------
 Using language:
 1. HTML(Canvas)
-2. Javascript(ES6)
+2. Javascript
 
 ----------------
 Used Library:
