@@ -1,7 +1,7 @@
 LifeGame on Javascript and HTML5 Canvas
 ----------------
 
-Conway's life game.
+Conway's life game. 
 You can change color using Chrome's color picker.
 
 ----------------
