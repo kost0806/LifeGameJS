@@ -9,6 +9,7 @@ function bindEvents() {
     // Bind Events
     resetBtn.click((event) => {
         console.log("reset!");
+        stopBtn.trigger("click");
 
         // Read width, height
         let width = $("#width").val();
