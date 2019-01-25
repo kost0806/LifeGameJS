@@ -19,6 +19,14 @@ class LifeGame {
         this.setup();
     }
 
+    /*
+    * @param string:color - #FFFFFF format.
+    * @return void
+    */
+    setColor(color) {
+        this.color = color;
+    }
+
     setSpeed(speed) {
         this.speed = Number.parseInt(speed);
     }
@@ -105,6 +113,7 @@ class LifeGame {
 
     render() {
         this.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        this.context.fillStyle = this.color;
         this.drawGrid();
         this.context.stroke();
     }

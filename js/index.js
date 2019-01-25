@@ -5,17 +5,41 @@ function bindEvents() {
     let runBtn = $("#runBtn");
     let resetBtn = $("#resetBtn");
     let stopBtn = $("#stopBtn");
+    let colorDiv = $("#color");
 
     // Bind Events
     resetBtn.click((event) => {
         console.log("reset!");
-        stopBtn.trigger("click");
+        if (lifeGame.timer != null) {
+            stopBtn.trigger("click");
+        }
 
         // Read width, height
         let width = $("#width").val();
         let height = $("#height").val();
 
+        // Read Color
+        let rColor = /rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)/
+        let color = colorDiv.css("background");
+        let rgb = color.match(rColor);
+        if (rgb.length != 4) {
+            color = "#000000";
+        }
+        else {
+            color = "#";
+            for (let i = 1; i < 4; ++i) {
+                let hex = parseInt(rgb[i]).toString(16);
+                if (hex.length == 1) {
+                    hex = "0" + hex;
+                }
+                color += hex;
+            }
+        }
+
+        // console.log(color);
+
         // Add new canvas
+        lifeGame.setColor(color);
         lifeGame.setSize(width, height);
     });
 
@@ -40,6 +64,7 @@ function bindEvents() {
     stopBtn.click((event) => {
         console.log("stop");
         clearTimeout(lifeGame.timer);
+        lifeGame.timer = null;
 
         lifeGame.restoreCells();
         lifeGame.render();
