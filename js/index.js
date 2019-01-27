@@ -10,7 +10,7 @@ function bindEvents() {
     // Bind Events
     resetBtn.click((event) => {
         console.log("reset!");
-        if (lifeGame.timer != null) {
+        if (lifeGame.isRunning()) {
             stopBtn.trigger("click");
         }
 
@@ -50,24 +50,12 @@ function bindEvents() {
         runBtn.addClass("hide");
         stopBtn.removeClass("hide");
 
-        lifeGame.saveCells();
-
-        let frame = () => {
-            lifeGame.update();
-            lifeGame.render();
-            lifeGame.timer = setTimeout(frame, lifeGame.speed);
-        }
-
-        lifeGame.timer = setTimeout(frame, lifeGame.speed);
+        lifeGame.start();
     });
 
     stopBtn.click((event) => {
         console.log("stop");
-        clearTimeout(lifeGame.timer);
-        lifeGame.timer = null;
-
-        lifeGame.restoreCells();
-        lifeGame.render();
+        lifeGame.stop();
 
         runBtn.removeClass("hide");
         stopBtn.addClass("hide");
