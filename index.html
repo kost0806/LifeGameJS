@@ -16,10 +16,14 @@
 </head>
 <body>
     <header>
+        <div id="block" class="hide"></div>
         <div id="controls" class="input-group">
             <div class="input-group-prepend"><span class="input-group-text">width</span></div><input type="number" id="width" value="30" class="input-control">
             <div class="input-group-prepend"><span class="input-group-text">height</span></div><input type="number" id="height" value="30" class="input-control">
             <div class="input-group-prepend"><span class="input-group-text">speed(ms)</span></div><input type="number" id="speed" value="500" class="input-control">
+            <div id="speed-bar-container" class="hide">
+                <div id="speed-bar-btn"></div>
+            </div>
             <button class="btn btn-warning" id="resetBtn">Reset</button>
             <button class="btn btn-primary" id="runBtn">Run!</button>
             <button class="btn btn-danger hide" id="stopBtn">Stop</button>

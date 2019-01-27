@@ -6,6 +6,10 @@ function bindEvents() {
     let resetBtn = $("#resetBtn");
     let stopBtn = $("#stopBtn");
     let colorDiv = $("#color");
+    let speedInput = $("#speed");
+    let blockPage = $("#block");
+    let speedBarContainer = $("#speed-bar-container");
+    let speedBarBtn = $("#speed-bar-btn");
 
     // Bind Events
     resetBtn.click((event) => {
@@ -60,6 +64,67 @@ function bindEvents() {
         runBtn.removeClass("hide");
         stopBtn.addClass("hide");
     });
+
+    speedInput.click((event) => {
+        speedBarContainer.removeClass("hide");
+        blockPage.removeClass("hide");
+
+        let offset = speedInput.offset();
+        let top = offset.top + Number.parseInt(speedInput.css("height"));
+        let left = offset.left - Number.parseInt(speedBarContainer.css("width")) / 2;
+        speedBarContainer.css({
+            top : top,
+            left : left
+        });
+
+        let speedRatio = Number.parseInt(speedInput.val()) / 1950;
+        offset = {
+            top : 10,
+            left : 5 + speedRatio * 270
+        }
+        speedBarBtn.css(offset);
+    });
+
+    speedInput.change((event) => {
+        lifeGame.setSpeed(speedInput.val());
+    });
+
+    let speedMax = 2000;
+    let speedMin = 50;
+    speedBarBtn.mousedown((event) => {
+        $(document).unbind("mousemove");
+        $(document).mousemove((e) => {
+            let left = 5;
+            let leftMin = 207.125;
+            let leftMax = 477.125;
+            let realSpeed;
+            if (e.pageX <= leftMin) {
+                left = 5;
+                realSpeed = speedMin;
+            }
+            else if (e.pageX >= leftMax) {
+                left = 275;
+                realSpeed = speedMax;
+            }
+            else {
+                left = 5 + e.pageX - leftMin;
+                realSpeed = (speedMax - speedMin) * ((e.pageX - leftMin) / (leftMax - leftMin));
+            }
+            speedBarBtn.css({
+                left: left
+            })
+            speedInput.val(Math.ceil(realSpeed));
+            speedInput.trigger("change");
+        })
+    })
+    $(document).mouseup(() => {
+        $(document).unbind("mousemove");
+    });
+
+    blockPage.click(() => {
+        speedBarContainer.addClass("hide");
+        blockPage.addClass("hide");
+    })
 }
 
 $(document).ready(function() {
@@ -69,4 +134,3 @@ $(document).ready(function() {
     lifeGame = new LifeGame($("#width").val(), $("#height").val());
     lifeGame.setSpeed($("#speed").val());
 });
-
